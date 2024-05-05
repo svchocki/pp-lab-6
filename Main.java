@@ -9,19 +9,38 @@ public class Main {
     public static void main(String[] args) {
         Worker worker1 = new Worker("John", 2000.0, 1, "2022-01-01", "Junior Developer");
         Worker worker2 = new Worker("Alice", 2200.0, 2, "2021-12-15", "Senior Developer");
-        Worker worker3 = new Worker("Bob", 1900.0, 1, "2023-03-20", "Intern");
-        Manager manager = new Manager("Michael", 5000.0, 5, "2019-05-01", "Head of Department");
+        Worker worker3 = new Worker("Bob", 1900.0, 3, "2023-03-20", "Intern");
+        Manager manager = new Manager("Michael", 5000.0, 4, "2019-05-01", "Head of Department");
 
-        System.out.println(worker1.getName() + " has code: " + worker1.hashCode());
-        System.out.println(worker2.getName() + " has code: " + worker2.hashCode());
-        System.out.println(worker3.getName() + " has code: " + worker3.hashCode());
-        System.out.println(manager.getName() + " has code: " + manager.hashCode());
+        List<Employee> employees = new ArrayList<>();
+        employees.add(worker1);
+        employees.add(worker2);
+        employees.add(worker3);
+        employees.add(manager);
 
-        Worker workerToCompare = worker1;
-        for (Employee employee : List.of(worker1, worker2, worker3, manager)) {
-            if (employee.equals(workerToCompare)) {
-                System.out.println(workerToCompare.getName() + " is equal to " + employee.getName());
+        double totalSalaryAllEmployees = 0.0;
+        double totalSalaryManagers = 0.0;
+        double totalSalaryWorkers = 0.0;
+
+        for (Employee emp1 : employees) {
+            for (Employee emp2 : employees) {
+                if (emp1 != emp2 && emp1.hashCode() == emp2.hashCode()) {
+                    System.out.println(emp1.getName() + " has the same ID as " + emp2.getName());
+                }
             }
         }
+
+        for (Employee employee : employees) {
+            totalSalaryAllEmployees += employee.getSalary();
+            if (employee instanceof Manager) {
+                totalSalaryManagers += employee.getSalary();
+            } else if (employee instanceof Worker) {
+                totalSalaryWorkers += employee.getSalary();
+            }
+        }
+
+        System.out.println("Total salary of all employees: " + totalSalaryAllEmployees);
+        System.out.println("Total salary of all managers: " + totalSalaryManagers);
+        System.out.println("Total salary of all workers: " + totalSalaryWorkers);
     }
 }
